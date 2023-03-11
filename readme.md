@@ -24,3 +24,7 @@ Build a dashbaord to see the activities for today
     <li> Yesterday's last working onenote</li>
     <li> Notes</li>
 </ol>
+
+#### TODO:
+1. Need to check the configuration to allow read/write for Notes.
+2. Need to check the configuration to allow read/write for Tasks.

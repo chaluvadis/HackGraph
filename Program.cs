@@ -19,55 +19,10 @@ var user = await operations.GetUserAsync();
 if (user is not null)
 {
     Console.WriteLine($"User {user.DisplayName} found");
-    var todoTask = GetRandomTodoTask("My Task");
+    var todoTask = GraphModel.GetRandomTodoTask("My Task", dateTimes);
     var result = await operations.AddTodoTaskAsync(todoTask);
     Console.WriteLine($"Task {result.Title} created at {result.CreatedDateTime}");
-    // var noteBook = GetRandomNotebook("My Notebook", user);
+    // var noteBook = GraphModel.GetRandomNotebook("My Notebook", user, dateTimes);
     // var result = await operations.AddOneNoteAsync(noteBook);
     // Console.WriteLine($"Notebook {result.DisplayName} created at {result.CreatedDateTime}");
-}
-
-
-TodoTask GetRandomTodoTask(string taskTitle)
-{
-    return new TodoTask
-    {
-        Id = Guid.NewGuid().ToString(),
-        Title = taskTitle,
-        CreatedDateTime = dateTimes.GetCurrentDateTime(),
-        StartDateTime = dateTimes.GetCurrentDateTimeTimeZone(),
-        DueDateTime = dateTimes.GetCurrentDateTimeTimeZone().AddDays(1),
-        IsReminderOn = true,
-        ReminderDateTime = dateTimes.GetCurrentDateTimeTimeZone().AddHours(1),
-        Status = Microsoft.Graph.Models.TaskStatus.NotStarted,
-        Importance = Importance.High,
-        OdataType = "#microsoft.graph.todoTask"
-    };
-}
-
-Notebook GetRandomNotebook(string name, User user)
-{
-    var notebook = new Notebook
-    {
-        Id = Guid.NewGuid().ToString(),
-        DisplayName = name,
-        IsDefault = true,
-        UserRole = OnenoteUserRole.Owner,
-        CreatedBy = new IdentitySet
-        {
-            User = new Identity
-            {
-                DisplayName = user.DisplayName,
-                Id = user.Id,
-                AdditionalData = new Dictionary<string, object>
-                {
-                    { "userPrincipalName", user.UserPrincipalName },
-                },
-                OdataType = "#microsoft.graph.user",
-            },
-        },
-        CreatedDateTime = dateTimes.GetCurrentDateTime(),
-        OdataType = "#microsoft.graph.notebook",
-    };
-    return notebook;
 }
