@@ -11,3 +11,5 @@ global using HackGraph.Client;
 global using HackGraph.Services;
 global using HackGraph.Brokers.DateTimes;
 global using HackGraph.Extensions;
+global using System;
+global using Microsoft.Graph.Models.ODataErrors;

@@ -18,11 +18,22 @@ var user = await operations.GetUserAsync();
 
 if (user is not null)
 {
-    Console.WriteLine($"User {user.DisplayName} found");
-    var todoTask = GraphModel.GetRandomTodoTask("My Task", dateTimes);
-    var result = await operations.AddTodoTaskAsync(todoTask);
-    Console.WriteLine($"Task {result.Title} created at {result.CreatedDateTime}");
-    // var noteBook = GraphModel.GetRandomNotebook("My Notebook", user, dateTimes);
-    // var result = await operations.AddOneNoteAsync(noteBook);
-    // Console.WriteLine($"Notebook {result.DisplayName} created at {result.CreatedDateTime}");
+    try
+    {
+        Console.WriteLine($"User {user.DisplayName} found");
+        // var todoTask = GraphModel.GetRandomTodoTask("My Task", dateTimes);
+        // var result = await operations.AddTodoTaskAsync(todoTask);
+        // Console.WriteLine($"Task {result.Title} created at {result.CreatedDateTime}");
+        var noteBook = GraphModel.GetRandomNotebook("My Notebook", user, dateTimes);
+        var result = await operations.AddOneNoteAsync(noteBook);
+        Console.WriteLine($"Notebook {result.DisplayName} created at {result.CreatedDateTime}");
+    }
+    catch (ODataError error)
+    {
+        Console.WriteLine($"Code-{error.Error.Code}, Message-{error.Error.Message}, Details-{error.Error.Details}");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
 }
