@@ -8,7 +8,18 @@ public class Operations : IOperations
         => this.graphServiceClient = graphServiceClient;
 
     public async ValueTask<User> GetUserAsync()
+        => await graphServiceClient.Me.GetAsync();
+
+    public async ValueTask<Notebook> AddOneNoteAsync(Notebook notebook)
     {
-        return await graphServiceClient.Me.GetAsync();
+        try
+        {
+            return await graphServiceClient.Me.Onenote.Notebooks.PostAsync(notebook);
+        }
+        catch (Exception exception)
+        {
+            Console.WriteLine(exception.Message);
+            throw;
+        }
     }
 }
