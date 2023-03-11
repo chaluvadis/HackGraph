@@ -10,3 +10,4 @@ global using Microsoft.Extensions.DependencyInjection;
 global using HackGraph.Client;
 global using HackGraph.Services;
 global using HackGraph.Brokers.DateTimes;
+global using HackGraph.Extensions;
