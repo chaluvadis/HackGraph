@@ -11,15 +11,8 @@ public class Operations : IOperations
         => await graphServiceClient.Me.GetAsync();
 
     public async ValueTask<Notebook> AddOneNoteAsync(Notebook notebook)
-    {
-        try
-        {
-            return await graphServiceClient.Me.Onenote.Notebooks.PostAsync(notebook);
-        }
-        catch (Exception exception)
-        {
-            Console.WriteLine(exception.Message);
-            throw;
-        }
-    }
+        => await graphServiceClient.Me.Onenote.Notebooks.PostAsync(notebook);
+
+    public async ValueTask<TodoTask> AddTodoTaskAsync(TodoTask todoTask)
+        => await graphServiceClient.Me.Todo.Lists["Tasks"].Tasks.PostAsync(todoTask);
 }

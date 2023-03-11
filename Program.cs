@@ -19,9 +19,30 @@ var user = await operations.GetUserAsync();
 if (user is not null)
 {
     Console.WriteLine($"User {user.DisplayName} found");
-    var noteBook = GetRandomNotebook("My Notebook", user);
-    var result = await operations.AddOneNoteAsync(noteBook);
-    Console.WriteLine($"Notebook {result.DisplayName} created at {result.CreatedDateTime}");
+    var todoTask = GetRandomTodoTask("My Task");
+    var result = await operations.AddTodoTaskAsync(todoTask);
+    Console.WriteLine($"Task {result.Title} created at {result.CreatedDateTime}");
+    // var noteBook = GetRandomNotebook("My Notebook", user);
+    // var result = await operations.AddOneNoteAsync(noteBook);
+    // Console.WriteLine($"Notebook {result.DisplayName} created at {result.CreatedDateTime}");
+}
+
+
+TodoTask GetRandomTodoTask(string taskTitle)
+{
+    return new TodoTask
+    {
+        Id = Guid.NewGuid().ToString(),
+        Title = taskTitle,
+        CreatedDateTime = dateTimes.GetCurrentDateTime(),
+        StartDateTime = dateTimes.GetCurrentDateTimeTimeZone(),
+        DueDateTime = dateTimes.GetCurrentDateTimeTimeZone().AddDays(1),
+        IsReminderOn = true,
+        ReminderDateTime = dateTimes.GetCurrentDateTimeTimeZone().AddHours(1),
+        Status = Microsoft.Graph.Models.TaskStatus.NotStarted,
+        Importance = Importance.High,
+        OdataType = "#microsoft.graph.todoTask"
+    };
 }
 
 Notebook GetRandomNotebook(string name, User user)
