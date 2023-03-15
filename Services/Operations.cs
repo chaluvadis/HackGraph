@@ -15,4 +15,7 @@ public class Operations : IOperations
 
     public async ValueTask<TodoTask> AddTodoTaskAsync(TodoTask todoTask)
         => await graphServiceClient.Me.Todo.Lists["Tasks"].Tasks.PostAsync(todoTask);
+
+    public async ValueTask<NotebookCollectionResponse> GetAllOneNotesAsync()
+        => await graphServiceClient.Me.Onenote.Notebooks.GetAsync();
 }

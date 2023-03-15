@@ -18,29 +18,20 @@ public static class GraphModel
         };
     }
 
-    public static Notebook GetRandomNotebook(string name, User user, IDateTimes dateTimes)
+    public static Notebook GetRandomNotebook(string name) => new()
     {
-        return new Notebook
-        {
-            Id = Guid.NewGuid().ToString(),
-            DisplayName = name,
-            IsDefault = true,
-            UserRole = OnenoteUserRole.Owner,
-            CreatedBy = new IdentitySet
-            {
-                User = new Identity
-                {
-                    DisplayName = user.DisplayName,
-                    Id = user.Id,
-                    AdditionalData = new Dictionary<string, object>
-                    {
-                        { "userPrincipalName", user.UserPrincipalName },
-                    },
-                    OdataType = "#microsoft.graph.user",
-                },
-            },
-            CreatedDateTime = dateTimes.GetCurrentDateTime(),
-            OdataType = "#microsoft.graph.notebook",
-        };
+        DisplayName = name,
+    };
+
+    public static void PrintApiException(ApiException error)
+    {
+        Console.WriteLine($"Data-{JsonSerializer.Serialize(error.Data)}"
+       + $"{Environment.NewLine}Message-{error.Message}"
+       + $"{Environment.NewLine}StackTrace-{error.StackTrace}"
+       + $"{Environment.NewLine}InnerException-{error.InnerException}"
+       + $"{Environment.NewLine}HelpLink-{error.HelpLink}"
+       + $"{Environment.NewLine}Source-{error.Source}"
+       + $"{Environment.NewLine}TargetSite-{error.TargetSite}"
+       + $"{Environment.NewLine}ApiResponse-{error.ResponseStatusCode}");
     }
 }

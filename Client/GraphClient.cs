@@ -1,7 +1,9 @@
 namespace HackGraph.Client;
 public static class GraphClient
 {
-    public static IServiceCollection ConfigureGraphClient(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection ConfigureGraphClient(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
         var azureAd = configuration.GetSection("AzureAd").Get<AzureAd>();
         var downStreamApi = configuration.GetSection("DownstreamApi").Get<DownstreamApi>();
